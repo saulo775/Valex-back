@@ -9,11 +9,10 @@ const configDatabase = {
     connectionString: process.env.DATABASE_URL
 };
 
-if (process.env.MODE === "PROD") {
-    configDatabase.ssl = {
-        rejectUnauthorized: false
-    }
-}
+// if (process.env.MODE === "PROD") {
+//     configDatabase.ssl = {
+//         rejectUnauthorized: false
+//     }
+// }
 
-const db = new Pool(configDatabase);
-export default db;
+export const connection = new Pool(configDatabase);
