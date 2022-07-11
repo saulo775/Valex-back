@@ -4,7 +4,7 @@ import Cryptr from "cryptr";
 import moment from "moment";
 
 dotenv.config();
-const cryptr = new Cryptr(process.env.SECRET_KEY)
+const cryptr = new Cryptr(process.env.SECRET_KEY);
 
 import { findByTypeAndEmployeeId, insert } from "../repositories/cardRepository.js";
 import { findByApiKey } from "../repositories/companyRepository.js";
@@ -51,7 +51,6 @@ async function saveNewCard(typeCard: string, employeeId: number, employeeName: s
 
     await insert(cardData);
 }
-
 
 function generateCardName(name:string) {
     const nameArray = name.split(" ");
