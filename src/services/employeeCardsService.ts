@@ -3,12 +3,28 @@ import Cryptr from 'cryptr';
 const cryptr = new Cryptr(process.env.SECRET_KEY);
 
 import { AppError } from "../errors/AppError.js";
-import { findById, update } from "../repositories/cardRepository.js";
+import { findById, update, } from "../repositories/cardRepository.js";
 
 export async function activateCard(id: any, cvc: number, password: string) {
     const passwordEncrypt = cryptr.encrypt(password);
     await verifyCardIsValid(id, cvc);
-    await updateCard(id, passwordEncrypt);
+    await updateCard(id, {password: passwordEncrypt});
+}
+
+export async function getAllTransactions(id: number) {
+    await findCard(Number(id));
+
+    
+}
+
+export async function unblockOneCard(id: number, password: string){
+    const card = await findCard(id);
+    await verifyExpiration(card.expirationDate);
+    if (card.isBlocked === false) {
+        throw new AppError("Card is already unlocked", 401);
+    }
+    checkIfPasswordIsCorrect(password, card.password);
+    updateCard(id, {isBlocked: false});
 }
 
 async function verifyCardIsValid(idCard: any, cvc: number) {
@@ -20,7 +36,7 @@ async function verifyCardIsValid(idCard: any, cvc: number) {
     verifyCVC(card.securityCode, cvc);
 }
 
-async function findCard(idCard: number){
+async function findCard(idCard: number) {
     const card = await findById(idCard);
 
     if (!card) {
@@ -29,13 +45,13 @@ async function findCard(idCard: number){
     return card;
 }
 
-async function verifyExpiration(expiration:string) {
+async function verifyExpiration(expiration: string) {
     const atualDate = moment(new Date()).format('MM/YY');
-    
+
     const atual = new Date(atualDate);
     const exp = new Date(expiration);
 
-    const difference = exp.getTime()-atual.getTime();
+    const difference = exp.getTime() - atual.getTime();
 
     if (difference <= 0) {
         throw new AppError("Unable to activate, card expired", 401)
@@ -49,6 +65,15 @@ function verifyCVC(cvcCard: string, cvcRequest: number) {
     }
 }
 
-async function updateCard(id: any, password: string) {
-    await update(id, {password});
+async function updateCard(id: any, cardData: any) {
+    await update(id, cardData);
 }
+
+function checkIfPasswordIsCorrect(passwordRequest:string, passwordSave: string) {
+    const passwordDescript = cryptr.decrypt(passwordSave);
+    if (passwordRequest !== passwordDescript) {
+        throw new AppError("Passwords don't match", 403);
+    }
+}
+
+

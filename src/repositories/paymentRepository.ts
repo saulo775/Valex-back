@@ -15,9 +15,9 @@ export async function findByCardId(cardId: number) {
     `SELECT 
       payments.*,
       businesses.name as "businessName"
-     FROM payments 
+      FROM payments 
       JOIN businesses ON businesses.id=payments."businessId"
-     WHERE "cardId"=$1
+      WHERE "cardId"=$1
     `,
     [cardId]
   );
