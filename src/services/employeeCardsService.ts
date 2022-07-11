@@ -27,6 +27,18 @@ export async function unblockOneCard(id: number, password: string){
     updateCard(id, {isBlocked: false});
 }
 
+export async function blockOneCard(id: number, password: string){
+    const card = await findCard(id);
+    await verifyExpiration(card.expirationDate);
+    if (card.isBlocked === true) {
+        throw new AppError("Card is already locked", 401);
+    }
+    checkIfPasswordIsCorrect(password, card.password);
+    updateCard(id, {isBlocked: true});
+}
+
+
+
 async function verifyCardIsValid(idCard: any, cvc: number) {
     const card = await findCard(idCard);
     await verifyExpiration(card.expirationDate);
