@@ -12,8 +12,8 @@ export async function activeCard(req: Request, res: Response) {
 
 export async function getTransactions(req: Request, res: Response) {
     const { id } = req.params;
-    const transactions = employeeCardsService.getAllTransactions(Number(id));
-
+    const transactions = await employeeCardsService.getAllTransactions(Number(id));
+    console.log(transactions);
     return res.status(200).json(transactions);
 }
 

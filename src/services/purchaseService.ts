@@ -53,7 +53,6 @@ async function checkBalance(cardId: number, amount: number){
     
 }
 
-
 async function getSpends(cardId: number){
     const spends = await findByCardId(cardId);
     let exits = 0

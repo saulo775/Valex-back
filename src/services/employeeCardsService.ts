@@ -5,6 +5,9 @@ const cryptr = new Cryptr(process.env.SECRET_KEY);
 import { AppError } from "../errors/AppError.js";
 import { findById, update, } from "../repositories/cardRepository.js";
 import { insert } from '../repositories/rechargeRepository.js';
+import { findByCardId } from '../repositories/paymentRepository.js';
+import { findByCardId as findRechargesByCardId } from '../repositories/rechargeRepository.js';
+
 
 export async function activateCard(id: any, cvc: number, password: string) {
     const passwordEncrypt = cryptr.encrypt(password);
@@ -13,9 +16,27 @@ export async function activateCard(id: any, cvc: number, password: string) {
 }
 
 export async function getAllTransactions(id: number) {
-    await findCard(Number(id));
+    const payments =  await findByCardId(id);
+    const recharges = await findRechargesByCardId(id);
+    let exits = 0;
+    let entryes = 0;
+    payments.forEach(element => {
+        exits+=element.amount;
+    });
 
-    
+    recharges.forEach(element => {
+        entryes+=element.amount;
+    });
+
+    const balance = entryes-exits;
+
+
+    const operationsData = {
+        balance,
+        transacions: [...payments],
+        recharges: [...recharges]
+    }
+    return operationsData;
 }
 
 export async function unblockOneCard(id: number, password: string){
