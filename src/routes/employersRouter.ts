@@ -6,9 +6,10 @@ import {
     unblockCard, 
     blockCard 
 } from "../controllers/employersCardsController.js";
-import { 
-    validateActivateCardInfo 
-} from "../middlewares/validatecardInfosMiddleware.js";
+// import { 
+//     validateActivateCardInfo 
+// } from "../middlewares/validatecardInfosMiddleware.js";
+import { validateActivateCardInfo } from "../middlewares/validateCardInfosMiddleware.js"
 
 const employersRouter = Router();
 
