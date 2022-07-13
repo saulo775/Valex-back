@@ -9,7 +9,7 @@ export interface Employee {
 }
 
 export async function findByCPF(cpf: string) {
-  const result = await connection.query<Employee, [number]>(
+  const result = await connection.query<Employee, [string]>(
     "SELECT * FROM employees WHERE cpf=$1",
     [cpf]
   );

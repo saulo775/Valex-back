@@ -1,5 +1,5 @@
 Arguments: 
-  /opt/homebrew/Cellar/node@16/16.15.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add -D @types/joi-cpf-cnpj
+  /opt/homebrew/Cellar/node@16/16.15.0/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add -D @types/ts-node@10.8.2
 
 PATH: 
   /opt/homebrew/opt/node@16/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/opt/homebrew/opt/node@16/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/opt/homebrew/bin:/opt/homebrew/sbin
@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fjoi-cpf-cnpj: Not found
+  Error: https://registry.yarnpkg.com/@types%2fts-node: Not found
       at Request.params.callback [as _callback] (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:66145:18)
       at Request.self.callback (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:140890:22)
       at Request.emit (node:events:527:28)
@@ -61,6 +61,7 @@ npm manifest:
       "@types/express": "^4.17.13",
       "@types/joi": "^17.2.3",
       "@types/moment": "^2.13.0",
+      "@types/pg": "^8.6.5",
       "nodemon": "^2.0.19",
       "ts-node": "^10.8.2",
       "typescript": "^4.7.4"
@@ -228,6 +229,15 @@ Lockfile:
     version "18.0.3"
     resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.3.tgz#463fc47f13ec0688a33aec75d078a0541a447199"
     integrity sha512-HzNRZtp4eepNitP+BD6k2L6DROIDG4Q0fm4x+dwfsr6LGmROENnok75VGw40628xf+iR24WeMFcHuuBDUAzzsQ==
+  
+  "@types/pg@^8.6.5":
+    version "8.6.5"
+    resolved "https://registry.yarnpkg.com/@types/pg/-/pg-8.6.5.tgz#2dce9cb468a6a5e0f1296a59aea3ac75dd27b702"
+    integrity sha512-tOkGtAqRVkHa/PVZicq67zuujI4Oorfglsr2IbKofDwBSysnaqSx7W1mDqFqdkGE6Fbgh+PZAl0r/BWON/mozw==
+    dependencies:
+      "@types/node" "*"
+      pg-protocol "*"
+      pg-types "^2.2.0"
   
   "@types/qs@*":
     version "6.9.7"
@@ -823,12 +833,12 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-3.5.1.tgz#f499ce76f9bf5097488b3b83b19861f28e4ed905"
     integrity sha512-6iCR0wVrro6OOHFsyavV+i6KYL4lVNyYAB9RD18w66xSzN+d8b66HiwuP30Gp1SH5O9T82fckkzsRjlrhD0ioQ==
   
-  pg-protocol@^1.5.0:
+  pg-protocol@*, pg-protocol@^1.5.0:
     version "1.5.0"
     resolved "https://registry.yarnpkg.com/pg-protocol/-/pg-protocol-1.5.0.tgz#b5dd452257314565e2d54ab3c132adc46565a6a0"
     integrity sha512-muRttij7H8TqRNu/DxrAJQITO4Ac7RmX3Klyr/9mJEOBeIpgnF8f9jAfRz5d3XwQZl5qBjF9gLsUtMPJE0vezQ==
   
-  pg-types@^2.1.0:
+  pg-types@^2.1.0, pg-types@^2.2.0:
     version "2.2.0"
     resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-2.2.0.tgz#2d0250d636454f7cfa3b6ae0382fdfa8063254a3"
     integrity sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==
