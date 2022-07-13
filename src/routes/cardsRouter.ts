@@ -6,6 +6,6 @@ import { verifyKeyCompany } from "../middlewares/verifyKeyCompanyMiddleware.js";
 
 const cardsRouter = Router();
 
-cardsRouter.patch("/cards",validateCardInfos, verifyKeyCompany, cardsController)
+cardsRouter.post("/cards",validateCardInfos, verifyKeyCompany, cardsController)
 
 export default cardsRouter;

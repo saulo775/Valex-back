@@ -14,12 +14,14 @@ import { AppError } from '../errors/AppError.js';
 export async function createCard(cpfEmployee: string, typeCard: string, keyCompany: any){
     const company = await findByApiKey(keyCompany);
     const employeer = await findByCPF(cpfEmployee);
+    const cvcFake = faker.random.numeric(3);
     if (company.id !== employeer.companyId) {
         throw new AppError("employee is not from this company", 422);
     }
 
     await getCard(typeCard, employeer.id);
-    await saveNewCard(typeCard, employeer.id, employeer.fullName);
+    await saveNewCard(typeCard, employeer.id, employeer.fullName, cvcFake);
+    return cvcFake;
 }
 
 async function getCard(typeCard: any, employeerId: number) {
@@ -30,9 +32,9 @@ async function getCard(typeCard: any, employeerId: number) {
     }
 }
 
-async function saveNewCard(typeCard: string, employeeId: number, employeeName: string) {
+async function saveNewCard(typeCard: string, employeeId: number, employeeName: string, cvcFake: string) {
     const cardNumber = faker.random.numeric(16);
-    const cvc = cryptr.encrypt(faker.random.numeric(3));
+    const cvc = cryptr.encrypt(cvcFake);
     const cardHolderName = generateCardName(employeeName);
     const expirationDate = generateExpiration();
 

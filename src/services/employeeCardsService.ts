@@ -11,7 +11,9 @@ import { findByCardId as findRechargesByCardId } from '../repositories/rechargeR
 
 export async function activateCard(id: any, cvc: number, password: string) {
     const passwordEncrypt = cryptr.encrypt(password);
+    
     await verifyCardIsValid(id, cvc);
+
     await updateCard(id, {password: passwordEncrypt});
 }
 
@@ -74,7 +76,8 @@ async function verifyCardIsValid(idCard: any, cvc: number) {
     if (card.password) {
         throw new AppError("Unable to activate, card is already active", 401);
     }
-    verifyCVC(card.securityCode, cvc);
+    
+    await verifyCVC(card.securityCode, cvc);
 }
 
 async function findCard(idCard: number) {
@@ -99,7 +102,7 @@ async function verifyExpiration(expiration: string) {
     }
 }
 
-function verifyCVC(cvcCard: string, cvcRequest: number) {
+async function verifyCVC(cvcCard: string, cvcRequest: number) {
     const cvcDecript = Number(cryptr.decrypt(cvcCard));
     if (cvcDecript !== cvcRequest) {
         throw new AppError("Unable to activate, security code inválid", 401);
